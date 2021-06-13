@@ -1,58 +1,55 @@
-import React, { Fragment, useState } from 'react';
-import './App.css';
-import Header from './components/Header';
+import React, {
+  Fragment,
+  useState
+} from "react";
 import Footer from "./components/Footer";
-import ListaProductos from "./components/ListaProductos";
-import Producto from './components/Producto';
+import Header from "./components/Header";
+import Producto from "./components/Producto";
 import Carrito from './components/Carrito';
-
 
 function App() {
 
-  // Crear lista de  productos
-  const [ productos, setProductos ] = useState([
-    { id: 1, nombre: 'Camisa ReactJS', precio: 50 }, 
-    { id: 2, nombre: 'Camisa VueJS', precio: 40 }, 
-    { id: 3, nombre: 'Camisa Node.JS', precio: 30 }, 
-    { id: 4, nombre: 'Camisa Angular', precio: 20 }, 
+  // Listado de productos
+  const [ productos, setProductos ]=useState([
+    { id: 1, nombre: 'Camisa ReactJS', precio: 50 },
+    { id: 2, nombre: 'Camisa Angular', precio: 40 },
+    { id: 3, nombre: 'Camisa VueJS', precio: 30 },
+    { id: 4, nombre: 'Camisa NodeJS', precio: 20 },
   ]);
 
-  const [carrito, agregarProducto] = useState([])
+  // State carrito de compras
+  const [ carrito, setCarrito ] = useState([]);
 
-  // Obtener año actual
-  //<ListaProductos />
-  const fecha = new Date().getFullYear();
 
-  return(
+  // Obtener fecha actual
+  const fecha=new Date().getFullYear();
+
+  return (
     <Fragment>
       <Header
-          titulo = 'Tienda Virtual'
-          pendiente = 'Seccion 4 Cap 9'
+        titulo='Tienda Virtual'
       />
-      
       <h1>Lista de productos</h1>
       {productos.map(producto => (
-        <Producto 
+        <Producto
           key={producto.id}
           producto={producto}
+          productos={productos}
           carrito={carrito}
-          agregarProducto={agregarProducto}
-          esCarrito={false}
+          setCarrito={setCarrito}
         />
       ))}
 
-      <h1>Carrito</h1>
       <Carrito 
         carrito={carrito}
-        agregarProducto={agregarProducto}
+        setCarrito={setCarrito}
       />
 
-      <Footer 
-        fecha = {fecha}
+      <Footer
+        fecha={fecha}
       />
     </Fragment>
   );
-
 }
 
 export default App;

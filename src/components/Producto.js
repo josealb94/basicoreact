@@ -1,48 +1,42 @@
-import React from "react";
+import React from 'react';
 
-const Producto = ({producto, carrito, agregarProducto, esCarrito}) => {
+const Producto = ({ producto, productos, carrito, setCarrito }) => {
 
-    const { nombre, precio, id } = producto;
+    const { id, nombre, precio } = producto;
 
-    //  Agregar producto al carrito
-    const seleccionarProducto = ({nombre, precio, id}) => {
-        agregarProducto([
+    // Agregar producto al carrito
+    const seleccionarProducto = id => {
+        const productoSeleccionado = productos.filter(producto => producto.id === id);
+        setCarrito([
             ...carrito,
-             producto
+            ...productoSeleccionado
         ]);
     }
 
     // Eliminar producto del carrito
-    const eliminarProducto = ({id}) => {
-        const productos = carrito.filter(producto => producto.id !== id);
-
-        // Colocar productos en el state 
-        agregarProducto(productos);
-
+    const eliminarProducto = id => {
+        const productosSeleccionados = carrito.filter(producto => producto.id !== id);
+        setCarrito(productosSeleccionados);
     }
 
-    return(
+    return (
         <div>
-            <h3>{nombre}</h3>
-            <p>Precio: ${precio}</p>
-            { esCarrito
-            ?
-                (
-                    <button 
-                        type="button"
-                        onClick={() => eliminarProducto(producto) }
-                    >Eliminar</button>
-                )
+            <h2>{nombre}</h2>
+            <p>${precio}</p>
+            {productos
+            ? 
+                (<button
+                    type="button"
+                    onClick={ () => seleccionarProducto(id) }
+                >Comprar</button>)
             :
-                (
-                    <button 
-                        type="button"
-                        onClick={() => seleccionarProducto(producto) }
-                    >Comprar</button>
-                )
+                (<button
+                    type="button"
+                    onClick={ () => eliminarProducto(id) }
+                >Eliminar</button>)
             }
         </div>
-    );
+    )
 }
 
 export default Producto;
